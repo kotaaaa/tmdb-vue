@@ -1,27 +1,14 @@
 <template>
   <div id="moreItemField">
-    <div>
-      <span>ジャンル</span>
-    </div>
     <ul>
-      <li>
+      <li v-for="cat in genres" :key="cat.id">
         <div
-          id="10749"
+          :id="cat.id"
           block="genre"
-          :class="{ select: handleSelected(10749) }"
+          :class="{ select: handleSelected(cat.id) }"
           @click="handleClick"
         >
-          Romance
-        </div>
-      </li>
-      <li>
-        <div
-          id="28"
-          block="genre"
-          :class="{ select: handleSelected(28) }"
-          @click="handleClick"
-        >
-          Action
+          {{cat.name}}
         </div>
       </li>
     </ul>
@@ -29,14 +16,15 @@
 </template>
 
 <script>
+import genres from "../mapping/genres_const"
 export default {
   name: "Genre",
   components: {},
   props: {},
   data() {
-    return {};
+    return genres;
   },
-  computed: {},
+  computed() {},
   created() {},
   mounted() {},
   methods: {
@@ -73,9 +61,14 @@ export default {
 </script>
 
 <style>
+#moreItemField ul {
+  list-style: none; 
+  padding-left: 0;
+  /* width: 300px; */
+}
 #moreItemField li div {
   display: block;
-  padding: 12px 5px;
+  padding: 5px;
   text-decoration: none;
   color: #666 !important;
   cursor: pointer;

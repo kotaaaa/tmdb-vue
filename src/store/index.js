@@ -9,7 +9,6 @@ export default createStore({
     state: {
         data: "aaaaa",
         params: [],
-        searched_movies: ["ssss"],
     },
     getters: {
         getData(state) {
@@ -25,6 +24,9 @@ export default createStore({
     mutations: {
         setParams(state, payload) {
             state.params = payload;
+        },
+        setPageNum(state, payload) {
+            state.page_num = payload;
         },
         setSearchedMovies(state, payload) {
             state.searched_movies = payload;
@@ -67,7 +69,8 @@ export default createStore({
             axios
                 .get(apiEndPoint)
                 .then((res) => {
-                    commit("setSearchedMovies", res.data);
+                    commit("setPageNum", res.data.page);
+                    commit("setSearchedMovies", res.data.results);
                 })
         }
     },
