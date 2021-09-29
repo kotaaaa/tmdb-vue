@@ -1,14 +1,14 @@
 <template>
   <div id="moreItemField">
     <ul>
-      <li v-for="cat in genres" :key="cat.id">
+      <li v-for="country in countries" :key="country.iso_3166_1">
         <div
-          :id="cat.id"
-          block="genre"
-          :class="{ select: handleSelected(cat.id) }"
+          :id="country.iso_3166_1"
+          block="country"
+          :class="{ select: handleSelected(country.iso_3166_1) }"
           @click="handleClick"
         >
-          {{ cat.name }}
+          {{ country.english_name }}
         </div>
       </li>
     </ul>
@@ -16,40 +16,35 @@
 </template>
 
 <script>
-import genres from "../mapping/genres_const"
+import countries from "../mapping/countryConst"
 export default {
-  name: "Genre",
+  name: "Country",
   components: {},
   props: {},
   data() {
-    return genres;
+    return countries;
   },
   computed() {},
   created() {},
   mounted() {},
   methods: {
     handleSelected(id) {
-      return this.$store.getters.getParams.with_genres.indexOf(id) > -1 ? true : false;
+      return this.$store.getters.getParams.region == id ? true : false;
     },
     handleClick(event) {
-      const genres = this.$store.getters.getParams.with_genres.split(',');
-      if (genres.indexOf(event.target.id) > -1) {
+      if (this.$store.getters.getParams.region == event.target.id) {
         this.$store
-          .dispatch("deleteCategoryParam",event.target.id)
+          .dispatch("deleteParams","region")
           .then(() => {
+            console.log("Deleting params succeeded");
             this.$store
               .dispatch("search")
               .then(() => {})
               .catch(() => {});
           })
       } else {
-        const params = this.$store.getters.getParams;
-        if (params.with_genres == "") {
-          params.with_genres = event.target.id;
-        } else {
-          params.with_genres = params.with_genres + "," + event.target.id;
-        }
-        
+        const params = {};
+        params.region = event.target.id;
         this.$store
           .dispatch("search", params)
           .then(() => {
@@ -59,7 +54,6 @@ export default {
               .catch(() => {});
           })
           .catch(() => {});
-
       }
     },
   },

@@ -8,7 +8,10 @@ const baseEndPoint = "https://api.themoviedb.org/3/discover/movie?api_key=053493
 export default createStore({
     state: {
         data: "aaaaa",
-        params: [],
+        params: {
+            with_genres: "",
+        },
+        searched_movies: [],
     },
     getters: {
         getData(state) {
@@ -17,6 +20,9 @@ export default createStore({
         getParams(state) {
             return state.params;
         },
+        getGenres(state) {
+            return state.params.with_genres;
+        },
         getSearchedMovies(state) {
             return state.searched_movies;
         },
@@ -24,6 +30,9 @@ export default createStore({
     mutations: {
         setParams(state, payload) {
             state.params = payload;
+        },
+        setGenres(state, payload) {
+            state.params.with_genres = payload;
         },
         setPageNum(state, payload) {
             state.page_num = payload;
@@ -53,6 +62,16 @@ export default createStore({
             console.log("newParams", newParams);
             commit("setParams", newParams);
         },
+
+        deleteCategoryParam({ commit }, deleteTarget = "") {
+            console.log("deleteTarget", deleteTarget);
+            const newGenres = this.state.params.with_genres.split(",")
+                .filter((genre) => genre != deleteTarget)
+                .join(",");
+            console.log("newGenres", newGenres);
+            commit("setGenres", newGenres);
+        },
+
         search({ commit }, params = {}) {
             const basedParams = _.cloneDeep(this.getters.getParams);
             Object.keys(params).forEach(
