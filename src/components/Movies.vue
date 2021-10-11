@@ -4,7 +4,7 @@
     <p>No movie selected</p>
   </h1>
   <h1 v-if="$store.getters.getSearchedMovies.length">
-    <p>Found {{ $store.getters.getSearchedMovies.length }} Movies !! </p>
+    <p>Found {{ $store.getters.getSearchedMovies.length }} Movies !!</p>
   </h1>
   <div class="tbl-list-movie">
     <div

@@ -1,6 +1,7 @@
 <template>
   <body>
     <div class="movie-contents">
+      <!-- <h1>{{ this.$router.path }}</h1> -->
       <!-- <Country class="category"></Country> -->
       <Genre class="Genre"></Genre>
       <Movies class="movie-list"></Movies>
