@@ -1,5 +1,6 @@
 <template>
   <div id="moreItemField">
+    <span> Country </span>
     <ul>
       <li v-for="country in countries" :key="country.iso_3166_1">
         <div

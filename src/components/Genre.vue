@@ -1,7 +1,8 @@
 <template>
   <div id="moreItemField">
-    <router-link to="/home"> Home </router-link>
-    <router-link to="/about"> About </router-link>
+    <span> Category </span>
+    <!-- <router-link to="/home"> Home </router-link> -->
+    <!-- <router-link to="/about"> About </router-link> -->
     <router-view></router-view>
     <ul>
       <li v-for="cat in genres" :key="cat.id">

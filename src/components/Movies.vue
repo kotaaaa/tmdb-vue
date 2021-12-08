@@ -47,15 +47,15 @@ export default {
 <style>
 .top-text {
   position: absolute;
-  top: 25px;
-  left: 400px;
+  top: 5px;
+  left: 500px;
 }
 .tbl-list-movie {
   display: flex;
   flex-wrap: wrap;
   position: absolute;
   top: 100px;
-  left: 200px;
+  left: 450px;
 }
 .unit-movie {
   padding: 10px;
