@@ -1,5 +1,16 @@
 # movie_works
 
+## Overview
+- You can search your favorite movie with some categories.
+- Utilised IMDB API to fetch moview resource.
+- Call API async so that whole page is not reloaded (SPA: Single Page Application).
+
+## Run with Docker
+```
+$ docker-compose up -d
+access to http://localhost:8080/
+```
+
 ## Project setup
 ```
 yarn install

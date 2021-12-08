@@ -3,7 +3,7 @@ import axios from "axios";
 import _ from "lodash";
 
 import paramsMapping from "../mapping/paramsMapping"
-const baseEndPoint = "https://api.themoviedb.org/3/discover/movie?api_key=0534930d6692ebb101db3214a44bcfe7&"
+const baseEndPoint = "https://api.themoviedb.org/3/discover/movie?api_key=" + process.env.VUE_APP_IMDB_API_KEY + "&"
 
 export default createStore({
     state: {
