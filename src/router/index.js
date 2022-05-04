@@ -1,25 +1,28 @@
 import { createWebHistory, createRouter } from "vue-router";
 
+import Top from "../views/Top.vue";
 import Home from "../views/Home.vue";
-import About from "../views/About.vue";
+import Trending from "../views/Trending.vue";
 
 const routes = [{
+        path: "/",
+        name: "Top",
+        component: Top,
+    }, {
         path: "/home",
         name: "Home",
         component: Home,
     },
     {
-        path: "/about",
-        name: "About",
-        component: About,
+        path: "/trending",
+        name: "Trending",
+        component: Trending,
     },
 ];
 
-
-
-const routerr = createRouter({
+const router = createRouter({
     history: createWebHistory(),
     routes,
 });
 
-export default routerr;
+export default router;

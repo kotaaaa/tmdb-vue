@@ -3,15 +3,20 @@ import axios from "axios";
 import _ from "lodash";
 
 import paramsMapping from "../mapping/paramsMapping"
-const baseEndPoint = "https://api.themoviedb.org/3/discover/movie?api_key=" + process.env.VUE_APP_IMDB_API_KEY + "&"
-
+const apiHost = "https://api.themoviedb.org"
+const baseEndPoint = apiHost + "/3/discover/movie?api_key=" + process.env.VUE_APP_IMDB_API_KEY + "&"
+const trendPath = apiHost + "/3/trending"
 export default createStore({
     state: {
-        data: "aaaaa",
+        data: "",
         params: {
             with_genres: "",
         },
         searched_movies: [],
+        types: {
+            type: "all",
+            unit: "day",
+        }
     },
     getters: {
         getData(state) {
@@ -26,6 +31,9 @@ export default createStore({
         getSearchedMovies(state) {
             return state.searched_movies;
         },
+        getTypes(state) {
+            return state.types;
+        }
     },
     mutations: {
         setParams(state, payload) {
@@ -40,22 +48,41 @@ export default createStore({
         setSearchedMovies(state, payload) {
             state.searched_movies = payload;
         },
+        setTypes(state, payload) {
+            state.types = payload;
+        }
     },
     actions: {
         updateParams({ commit }, newParams = {}) {
             const updateParams = _.cloneDeep(this.getters.getParams);
+            console.log("newParams", newParams)
             Object.keys(newParams).forEach(
                 (paramName) => (updateParams[paramName] = newParams[paramName])
             );
             commit("setParams", updateParams);
         },
+
+        updateType({ commit }, newTypes = {}) {
+            const updateTypes = _.cloneDeep(this.getters.getTypes);
+            console.log("updateTypes before", updateTypes)
+            console.log("newType", newTypes)
+            Object.keys(newTypes).forEach(
+                (typeName) => (updateTypes[typeName] = newTypes[typeName])
+            );
+            console.log("updateTypes after", updateTypes)
+            commit("setTypes", updateTypes);
+        },
+
         deleteParams({ commit }, deleteTarget = []) {
             if (!Array.isArray(deleteTarget)) {
                 deleteTarget = [deleteTarget];
             }
+            console.log("zzz", this.state.params)
             const newParams = Object.keys(this.state.params)
                 .filter((paramName) => !deleteTarget.includes(paramName))
                 .reduce((prev, curr) => {
+                    console.log("aaa", prev)
+                    console.log("bbb", curr)
                     prev[curr] = this.state.params[curr];
                     return prev;
                 }, {});
@@ -87,6 +114,18 @@ export default createStore({
             console.log(apiEndPoint);
             axios
                 .get(apiEndPoint)
+                .then((res) => {
+                    commit("setPageNum", res.data.page);
+                    commit("setSearchedMovies", res.data.results);
+                })
+        },
+
+        getTrending({ commit }) {
+            const trendEndPoint = trendPath + "/" + this.getters.getTypes.type + "/" + this.getters.getTypes.unit + "?api_key=" + process.env.VUE_APP_IMDB_API_KEY
+            console.log("we will call following URL");
+            console.log(trendEndPoint);
+            axios
+                .get(trendEndPoint)
                 .then((res) => {
                     commit("setPageNum", res.data.page);
                     commit("setSearchedMovies", res.data.results);

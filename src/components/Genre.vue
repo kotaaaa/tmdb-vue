@@ -1,9 +1,7 @@
 <template>
   <div id="moreItemField">
     <span> Category </span>
-    <!-- <router-link to="/home"> Home </router-link> -->
-    <!-- <router-link to="/about"> About </router-link> -->
-    <router-view></router-view>
+    <!-- <router-view></router-view> -->
     <ul>
       <li v-for="cat in genres" :key="cat.id">
         <div
@@ -20,7 +18,7 @@
 </template>
 
 <script>
-import genres from "../mapping/genres_const"
+import genres from "../mapping/genresConst.js";
 export default {
   name: "Genre",
   components: {},
@@ -33,19 +31,21 @@ export default {
   mounted() {},
   methods: {
     handleSelected(id) {
-      return this.$store.getters.getParams.with_genres.indexOf(id) > -1 ? true : false;
+      return this.$store.getters.getParams.with_genres.indexOf(id) > -1
+        ? true
+        : false;
     },
     handleClick(event) {
-      const genres = this.$store.getters.getParams.with_genres.split(',');
+      const genres = this.$store.getters.getParams.with_genres.split(",");
       if (genres.indexOf(event.target.id) > -1) {
         this.$store
-          .dispatch("deleteCategoryParam",event.target.id)
+          .dispatch("deleteCategoryParam", event.target.id)
           .then(() => {
             this.$store
               .dispatch("search")
               .then(() => {})
               .catch(() => {});
-          })
+          });
       } else {
         const params = this.$store.getters.getParams;
         if (params.with_genres == "") {
@@ -53,7 +53,7 @@ export default {
         } else {
           params.with_genres = params.with_genres + "," + event.target.id;
         }
-        
+
         this.$store
           .dispatch("search", params)
           .then(() => {
@@ -63,7 +63,6 @@ export default {
               .catch(() => {});
           })
           .catch(() => {});
-
       }
     },
   },
@@ -71,21 +70,4 @@ export default {
 </script>
 
 <style>
-#moreItemField ul {
-  list-style: none;
-  padding-left: 0;
-  /* width: 300px; */
-}
-#moreItemField li div {
-  display: block;
-  padding: 5px;
-  text-decoration: none;
-  color: #666 !important;
-  cursor: pointer;
-}
-
-#moreItemField li div.select {
-  background: #f2f2f2;
-  padding-left: 5px;
-}
 </style>

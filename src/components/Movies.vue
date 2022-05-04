@@ -1,33 +1,36 @@
 <template>
   <!-- <h1>{{ this.$store.getters.getSearchedMovies }}</h1> -->
-  <div class="top-text">
-    <h1 v-if="!$store.getters.getSearchedMovies.length">
-      <p>No movie selected</p>
-    </h1>
-    <h1 v-if="$store.getters.getSearchedMovies.length">
-      <p>Found {{ $store.getters.getSearchedMovies.length }} Movies </p>
-    </h1>
-  </div>
-  <div class="tbl-list-movie">
-    <div
-      v-for="movie in $store.getters.getSearchedMovies"
-      :key="movie.id"
-      class="unit-movie"
-    >
-      <a
-        :href="
-          'https://api.themoviedb.org/3/movie/' +
-          movie.id +
-          '?api_key='+ VUE_APP_IMDB_API_KEY
-        "
+  <div>
+    <div class="top-text">
+      <h4 v-if="!$store.getters.getSearchedMovies.length">
+        <p>No movie selected</p>
+      </h4>
+      <h4 v-if="$store.getters.getSearchedMovies.length">
+        <p>Found {{ $store.getters.getSearchedMovies.length }} Movies</p>
+      </h4>
+    </div>
+    <div class="tbl-list-movie">
+      <div
+        v-for="movie in $store.getters.getSearchedMovies"
+        :key="movie.id"
+        class="unit-movie"
       >
-        <img
-          :src="
-            'https://image.tmdb.org/t/p/w300_and_h450_bestv2' +
-            movie.poster_path
+        <a
+          :href="
+            'https://api.themoviedb.org/3/movie/' +
+            movie.id +
+            '?api_key=' +
+            VUE_APP_IMDB_API_KEY
           "
-        />
-      </a>
+        >
+          <img
+            :src="
+              'https://image.tmdb.org/t/p/w300_and_h450_bestv2' +
+              movie.poster_path
+            "
+          />
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -40,22 +43,25 @@ export default {
   data() {
     return {
       VUE_APP_IMDB_API_KEY: process.env.VUE_APP_IMDB_API_KEY,
-    }
-  }
+    };
+  },
+  created() {
+    this.$store.dispatch("search");
+  },
 };
 </script>
 <style>
 .top-text {
-  position: absolute;
+  position: relative;
   top: 5px;
-  left: 500px;
+  /* left: 500px; */
 }
 .tbl-list-movie {
   display: flex;
   flex-wrap: wrap;
-  position: absolute;
-  top: 100px;
-  left: 450px;
+  position: static;
+  /* top: 100px; */
+  /* left: 450px; */
 }
 .unit-movie {
   padding: 10px;

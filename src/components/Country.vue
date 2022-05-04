@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import countries from "../mapping/countryConst"
+import countries from "../mapping/countryConst";
 export default {
   name: "Country",
   components: {},
@@ -34,15 +34,13 @@ export default {
     },
     handleClick(event) {
       if (this.$store.getters.getParams.region == event.target.id) {
-        this.$store
-          .dispatch("deleteParams","region")
-          .then(() => {
-            console.log("Deleting params succeeded");
-            this.$store
-              .dispatch("search")
-              .then(() => {})
-              .catch(() => {});
-          })
+        this.$store.dispatch("deleteParams", "region").then(() => {
+          console.log("Deleting params succeeded");
+          this.$store
+            .dispatch("search")
+            .then(() => {})
+            .catch(() => {});
+        });
       } else {
         const params = {};
         params.region = event.target.id;
@@ -62,21 +60,4 @@ export default {
 </script>
 
 <style>
-#moreItemField ul {
-  list-style: none;
-  padding-left: 0;
-  /* width: 300px; */
-}
-#moreItemField li div {
-  display: block;
-  padding: 5px;
-  text-decoration: none;
-  color: #666 !important;
-  cursor: pointer;
-}
-
-#moreItemField li div.select {
-  background: #f2f2f2;
-  padding-left: 5px;
-}
 </style>
