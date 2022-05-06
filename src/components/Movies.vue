@@ -30,6 +30,10 @@
             "
           />
         </a>
+        <p>{{ movie.original_title }}</p>
+        <span>Review: {{ movie.vote_average }} </span>
+        <span> Review Count: {{ movie.vote_count }}</span>
+        <span> Release Date: {{ movie.release_date }} </span>
       </div>
     </div>
   </div>
@@ -52,18 +56,24 @@ export default {
 </script>
 <style>
 .top-text {
-  position: relative;
+  /* position: relative; */
   top: 5px;
   /* left: 500px; */
 }
 .tbl-list-movie {
   display: flex;
   flex-wrap: wrap;
-  position: static;
+  /* position: static; */
   /* top: 100px; */
   /* left: 450px; */
 }
 .unit-movie {
   padding: 10px;
+  text-align: center;
+  max-width: 320px;
+  /* font-size: 1.5rem; */
+}
+.unit-movie > p {
+  font-size: 1.5rem;
 }
 </style>

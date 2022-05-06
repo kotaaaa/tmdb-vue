@@ -1,9 +1,14 @@
 <template>
   <body>
-    <div class="movie-contents">
-      <div id="moreItemField">
-        <span> Type </span>
-        <ul>
+    <div class="trending-filters">
+      <div id="moreItemField" class="type-filter">
+        <span
+          v-bind:class="{ active: active === 'type' }"
+          @click="dropdown('type')"
+        >
+          Type
+        </span>
+        <ul v-if="active === 'type'">
           <li v-for="type in types.types" :key="type.type">
             <div
               :id="type.type"
@@ -15,9 +20,14 @@
           </li>
         </ul>
       </div>
-      <div id="moreItemField">
-        <span> Day/Week </span>
-        <ul>
+      <div id="moreItemField" class="unit-filter">
+        <span
+          v-bind:class="{ active: active === 'unit' }"
+          @click="dropdown('unit')"
+        >
+          Day/Week
+        </span>
+        <ul v-if="active === 'unit'">
           <li v-for="unit in units.units" :key="unit.unit">
             <div
               :id="unit.unit"
@@ -45,12 +55,17 @@ export default {
     Movies,
   },
   data() {
-    return { types, units };
+    const active = "";
+    return { types, units, active };
   },
   created() {
     this.$store.dispatch("getTrending");
   },
   methods: {
+    dropdown(list) {
+      console.log(this.active);
+      this.active = this.active === list ? "" : list;
+    },
     handleSelectedType(id) {
       return this.$store.getters.getTypes.type.indexOf(id) > -1 ? true : false;
     },
@@ -83,4 +98,18 @@ export default {
 
 
 <style>
+.type-filter {
+  position: absolute;
+  top: 75px;
+  left: 300px;
+  width: 130px;
+  padding: 10px;
+}
+.unit-filter {
+  position: absolute;
+  top: 75px;
+  left: 450px;
+  width: 130px;
+  padding: 10px;
+}
 </style>

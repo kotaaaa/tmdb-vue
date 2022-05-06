@@ -11,6 +11,8 @@ export default createStore({
         data: "",
         params: {
             with_genres: "",
+            sort_by: "popularity.desc",
+            include_adult: "false",
         },
         searched_movies: [],
         types: {
@@ -77,7 +79,6 @@ export default createStore({
             if (!Array.isArray(deleteTarget)) {
                 deleteTarget = [deleteTarget];
             }
-            console.log("zzz", this.state.params)
             const newParams = Object.keys(this.state.params)
                 .filter((paramName) => !deleteTarget.includes(paramName))
                 .reduce((prev, curr) => {

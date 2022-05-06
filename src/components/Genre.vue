@@ -1,9 +1,14 @@
 <template>
   <div id="moreItemField">
-    <span> Category </span>
+    <span
+      v-bind:class="{ active: active === 'category' }"
+      @click="dropdown('category')"
+    >
+      Category
+    </span>
     <!-- <router-view></router-view> -->
-    <ul>
-      <li v-for="cat in genres" :key="cat.id">
+    <ul v-if="active === 'category'">
+      <li v-for="cat in genres.genres" :key="cat.id">
         <div
           :id="cat.id"
           block="genre"
@@ -24,12 +29,17 @@ export default {
   components: {},
   props: {},
   data() {
-    return genres;
+    const active = "";
+    return { genres, active };
   },
   computed() {},
   created() {},
   mounted() {},
   methods: {
+    dropdown(list) {
+      console.log(this.active);
+      this.active = this.active === list ? "" : list;
+    },
     handleSelected(id) {
       return this.$store.getters.getParams.with_genres.indexOf(id) > -1
         ? true

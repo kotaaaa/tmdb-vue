@@ -5,5 +5,11 @@ const paramsMapping = {
     region: {
         paramName: "region"
     },
+    sort_by: {
+        paramName: "sort_by"
+    },
+    include_adult: {
+        paramName: "include_adult"
+    },
 }
 export default paramsMapping;

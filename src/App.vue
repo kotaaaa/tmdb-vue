@@ -39,9 +39,19 @@ header {
   padding: 10px;
 }
 
+#moreItemField > span::after {
+  font-size: 0.5rem;
+  content: "▼";
+}
+#moreItemField > span.active::after {
+  content: "▲";
+}
+
 #moreItemField ul {
   list-style: none;
   padding-left: 0;
+  font-size: 0.75rem;
+  background-color: #ffffff;
   /* width: 300px; */
 }
 #moreItemField li div {

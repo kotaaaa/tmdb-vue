@@ -1,8 +1,13 @@
 <template>
   <div id="moreItemField">
-    <span> Country </span>
-    <ul>
-      <li v-for="country in countries" :key="country.iso_3166_1">
+    <span
+      v-bind:class="{ active: active === 'country' }"
+      @click="dropdown('country')"
+    >
+      Country
+    </span>
+    <ul v-if="active === 'country'">
+      <li v-for="country in countries.countries" :key="country.iso_3166_1">
         <div
           :id="country.iso_3166_1"
           block="country"
@@ -23,12 +28,17 @@ export default {
   components: {},
   props: {},
   data() {
-    return countries;
+    const active = "";
+    return { countries, active };
   },
   computed() {},
   created() {},
   mounted() {},
   methods: {
+    dropdown(list) {
+      console.log(this.active);
+      this.active = this.active === list ? "" : list;
+    },
     handleSelected(id) {
       return this.$store.getters.getParams.region == id ? true : false;
     },
