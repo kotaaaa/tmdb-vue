@@ -79,6 +79,6 @@ header {
   /* position: absolute;
   top: 100px;
   left: 200px; */
-  width: 1500px;
+  width: 1700px;
 }
 </style>

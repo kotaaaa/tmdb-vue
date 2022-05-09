@@ -6,6 +6,7 @@ import paramsMapping from "../mapping/paramsMapping"
 const apiHost = "https://api.themoviedb.org"
 const baseEndPoint = apiHost + "/3/discover/movie?api_key=" + process.env.VUE_APP_IMDB_API_KEY + "&"
 const trendPath = apiHost + "/3/trending"
+const detailPath = apiHost + "/3/movie"
 export default createStore({
     state: {
         data: "",
@@ -18,7 +19,8 @@ export default createStore({
         types: {
             type: "all",
             unit: "day",
-        }
+        },
+        detail: {}
     },
     getters: {
         getData(state) {
@@ -35,6 +37,9 @@ export default createStore({
         },
         getTypes(state) {
             return state.types;
+        },
+        getDetail(state) {
+            return state.detail;
         }
     },
     mutations: {
@@ -52,6 +57,9 @@ export default createStore({
         },
         setTypes(state, payload) {
             state.types = payload;
+        },
+        setDetail(state, payload) {
+            state.detail = payload;
         }
     },
     actions: {
@@ -130,6 +138,18 @@ export default createStore({
                 .then((res) => {
                     commit("setPageNum", res.data.page);
                     commit("setSearchedMovies", res.data.results);
+                })
+        },
+
+        getDetail({ commit }, id) {
+            const detailEndpoint = detailPath + "/" +
+                id + "?api_key=" + process.env.VUE_APP_IMDB_API_KEY
+            console.log("we will call following URL");
+            console.log(detailEndpoint);
+            axios
+                .get(detailEndpoint)
+                .then((res) => {
+                    commit("setDetail", res.data);
                 })
         }
     },

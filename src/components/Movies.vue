@@ -15,25 +15,18 @@
         :key="movie.id"
         class="unit-movie"
       >
-        <a
-          :href="
-            'https://api.themoviedb.org/3/movie/' +
-            movie.id +
-            '?api_key=' +
-            VUE_APP_IMDB_API_KEY
-          "
-        >
+        <router-link :to="{ name: 'Work', params: { id: movie.id } }">
           <img
             :src="
               'https://image.tmdb.org/t/p/w300_and_h450_bestv2' +
               movie.poster_path
             "
           />
-        </a>
-        <p>{{ movie.original_title }}</p>
+        </router-link>
+        <p class="title">{{ movie.original_title }}</p>
         <span>Review: {{ movie.vote_average }} </span>
         <span> Review Count: {{ movie.vote_count }}</span>
-        <span> Release Date: {{ movie.release_date }} </span>
+        <p>Release Date: {{ movie.release_date }}</p>
       </div>
     </div>
   </div>
@@ -73,7 +66,7 @@ export default {
   max-width: 320px;
   /* font-size: 1.5rem; */
 }
-.unit-movie > p {
+.title {
   font-size: 1.5rem;
 }
 </style>
