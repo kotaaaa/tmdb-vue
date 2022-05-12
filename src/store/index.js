@@ -20,7 +20,8 @@ export default createStore({
             type: "all",
             unit: "day",
         },
-        detail: {}
+        detail: {},
+        reviews: [],
     },
     getters: {
         getData(state) {
@@ -40,7 +41,10 @@ export default createStore({
         },
         getDetail(state) {
             return state.detail;
-        }
+        },
+        getOriginalReviews(state) {
+            return state.reviews;
+        },
     },
     mutations: {
         setParams(state, payload) {
@@ -60,6 +64,9 @@ export default createStore({
         },
         setDetail(state, payload) {
             state.detail = payload;
+        },
+        setReview(state, payload) {
+            state.reviews = payload;
         }
     },
     actions: {
@@ -151,6 +158,18 @@ export default createStore({
                 .then((res) => {
                     commit("setDetail", res.data);
                 })
-        }
+        },
+
+        getReview({ commit }, id) {
+            const reviewEndpoint = detailPath + "/" +
+                id + "/reviews?api_key=" + process.env.VUE_APP_IMDB_API_KEY
+            console.log("we will call following URL");
+            console.log(reviewEndpoint);
+            axios
+                .get(reviewEndpoint)
+                .then((res) => {
+                    commit("setReview", res.data.results);
+                })
+        },
     },
 });
