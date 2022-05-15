@@ -31,8 +31,8 @@
         :key="review.id"
       >
         <h4>
-          Username: {{ review.author_details.username }} Rating:
-          {{ review.author_details.rating }}
+          Username: {{ review.username }} Rating:
+          {{ review.rating }}
         </h4>
         {{ review.content }}
       </span>
@@ -56,6 +56,7 @@ export default {
     console.log("this.$route.params.id1", this.$route.params.id);
     this.$store.dispatch("getDetail", this.$route.params.id);
     this.$store.dispatch("getReview", this.$route.params.id);
+    // this.$store.dispatch("getWordCloudStatus", this.$route.params.id);
   },
 };
 </script>

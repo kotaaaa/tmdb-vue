@@ -1,0 +1,4 @@
+list
+curl "https://api.themoviedb.org/4/list/1?page=1&api_key=0534930d6692ebb101db3214a44bcfe7"
+certification
+curl "https://api.themoviedb.org/3/certification/movie/list?api_key=0534930d6692ebb101db3214a44bcfe7"

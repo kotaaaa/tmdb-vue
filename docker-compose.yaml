@@ -1,0 +1,42 @@
+version: '3'
+services:
+  web:
+    build: ./web
+    image: movieworks/vue3
+    container_name: 'movieworks'
+    ports:
+      - '8080:8080'
+  api:
+    hostname: movie-api
+    build: ./movie-api
+    volumes:
+      - ./movie-api:/work
+      - socket:/tmp
+    container_name: 'backend-server'
+    ports:
+      - '5000:5000'
+    networks:
+      - movie-app-network
+    command: uwsgi --ini /work/uwsgi.ini
+
+  movie-database:
+    container_name: "movie-database"
+    image: mysql:5.7
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    volumes:
+      - db_volume:/var/lib/mysql
+      - ./db/initdb.d:/docker-entrypoint-initdb.d
+    # Set up mysql database name and password
+    env_file: ./.env.local
+    ports:
+      - 3306:3306
+    networks:
+      - movie-app-network
+
+networks:
+  movie-app-network:
+    driver: bridge
+
+volumes:
+  socket:
+  db_volume:

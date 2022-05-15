@@ -7,6 +7,7 @@ const apiHost = "https://api.themoviedb.org"
 const baseEndPoint = apiHost + "/3/discover/movie?api_key=" + process.env.VUE_APP_IMDB_API_KEY + "&"
 const trendPath = apiHost + "/3/trending"
 const detailPath = apiHost + "/3/movie"
+const internalAPIHost = "http://localhost:5000"
 export default createStore({
     state: {
         data: "",
@@ -67,6 +68,9 @@ export default createStore({
         },
         setReview(state, payload) {
             state.reviews = payload;
+        },
+        setWordCloudImage(state, payload) {
+            state.wordcloud_url = payload;
         }
     },
     actions: {
@@ -97,8 +101,6 @@ export default createStore({
             const newParams = Object.keys(this.state.params)
                 .filter((paramName) => !deleteTarget.includes(paramName))
                 .reduce((prev, curr) => {
-                    console.log("aaa", prev)
-                    console.log("bbb", curr)
                     prev[curr] = this.state.params[curr];
                     return prev;
                 }, {});
@@ -159,16 +161,35 @@ export default createStore({
                     commit("setDetail", res.data);
                 })
         },
-
         getReview({ commit }, id) {
-            const reviewEndpoint = detailPath + "/" +
-                id + "/reviews?api_key=" + process.env.VUE_APP_IMDB_API_KEY
+            const reviewEndpoint = internalAPIHost + "/reviews/" + id
             console.log("we will call following URL");
             console.log(reviewEndpoint);
             axios
                 .get(reviewEndpoint)
                 .then((res) => {
                     commit("setReview", res.data.results);
+                })
+        },
+        createWordCloud({ commit }, id) {
+            const createwcEndpoint = internalAPIHost + "/create/wordcloud"
+            console.log("we will call following URL");
+            console.log(id)
+            console.log(createwcEndpoint);
+            axios
+                .post(createwcEndpoint)
+                .then((res) => {
+                    commit("setWordCloudImage", res.data.img_url);
+                })
+        },
+        getWordCloudStatus({ commit }, id) {
+            const checkwcEndpoint = internalAPIHost + "/status/wordcloud/" + id
+            console.log("we will call following URL");
+            console.log(checkwcEndpoint);
+            axios
+                .get(checkwcEndpoint)
+                .then((res) => {
+                    commit("setWordCloudImage", res.data.img_url);
                 })
         },
     },
