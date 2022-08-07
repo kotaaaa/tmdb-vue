@@ -1,4 +1,4 @@
-# How to run dev server
+# How to run DEV server
 
 ```
 $ python app.py
