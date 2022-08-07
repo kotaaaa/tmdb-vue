@@ -1,9 +1,0 @@
-{
-    "DBHOST": "movie-database",
-    "DBNAME": "movie-db",
-    "DBUSER": "kota1110",
-    "DBPASS": "Kota0108",
-    "DBCHARSET": "utf8",
-    "IMDB_API_HOST": "https://api.themoviedb.org",
-    "IMDB_API_KEY": "0534930d6692ebb101db3214a44bcfe7"
-}
