@@ -8,7 +8,7 @@
 
 ```
 $ pwd
-/path/to/movie_works
+/path/to/tmdb-vue
 $ docker compose up
 ```
 
